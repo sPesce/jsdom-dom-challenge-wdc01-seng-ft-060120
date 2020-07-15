@@ -55,3 +55,6 @@ function decrementCounter()
 {
   counter.innerText = (parseInt(counter.innerText,10) - 1)
 }
+
+//listener on like - counter val-> key : value->times
+//find(and increment) or create
