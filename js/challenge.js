@@ -15,60 +15,54 @@ document.addEventListener("DOMContentLoaded",function domLoaded()
   const form = document.getElementById('comment-form');
   const commentDiv = document.getElementById('list')
 
-  plus.addEventListener("click",function(e)
-  {
-    incrementCounter();
-  });
-  minus.addEventListener("click",function(e)
-  {
-    decrementCounter();
-  }); 
+  const numberMap = {};
 
-  /*pauseListener*/
-  pause.addEventListener("click",function(e)
-  {
-    const buttons = [minus,plus,heart,submit];
-    //toggle is_paused
-    is_paused = !is_paused;
-    //toggle each buttons 'disabled' property     
-    for(const html_tag of buttons)
-    {
-      html_tag.disabled = !html_tag.disabled;
-    }   
-    if (is_paused)
-    {       
-      //change text on pause button to resume
-      pause.innerText = 'resume'
-    } else
-    {    
-      //change text on pause button to resume
-      pause.innerText = 'pause'
-    }
-  });
-
-    const numberMap = {};
-
-   heart.addEventListener("click", function(e){
-      
-       const countVal = parseInt(counter.innerText,10);
-       if (numberMap[countVal]) {
-           numberMap[countVal] += 1
-       }
-       else {
-           numberMap[countVal] = 1 
-       }
-       let li = document.querySelectorAll(`[data-num='${countVal}']`)[0];
-       if(!li)
-       {
-          li = document.createElement("li")
-          list.appendChild(li)
-       }
-
-       li.dataset.num = countVal
-       li.innerHTML = `${countVal} has been liked <span>${numberMap[countVal]}</span> times`
-
-    //    Set data-num property 
-    //    Set inner-text
+   document.addEventListener("click", function(e){
+      target = e.target.id
+      if(target === 'heart')
+      { 
+        const countVal = parseInt(counter.innerText,10);
+        if (numberMap[countVal]) {
+            numberMap[countVal] += 1
+        }
+        else {
+            numberMap[countVal] = 1 
+        }
+        let li = document.querySelectorAll(`[data-num='${countVal}']`)[0];
+        if(!li)
+        {
+            li = document.createElement("li")
+            list.appendChild(li)
+        }
+        li.dataset.num = countVal
+        li.innerHTML = `${countVal} has been liked <span>${numberMap[countVal]}</span> times`
+      }else if (target === 'plus')
+      {
+        incrementCounter();
+      }else if (target === 'minus')
+      {
+        decrementCounter();
+      }else if (target === 'pause')
+      {
+        const buttons = [minus,plus,heart,submit];
+        //toggle is_paused
+        is_paused = !is_paused;
+        //toggle each buttons 'disabled' property     
+        for(const html_tag of buttons)
+        {
+          html_tag.disabled = !html_tag.disabled;
+        }   
+        if (is_paused)
+        {       
+          //change text on pause button to resume
+          pause.innerText = 'resume'
+        } else
+        {    
+          //change text on pause button to resume
+          pause.innerText = 'pause'
+        }
+      }
+    
    })
 
    form.addEventListener('submit', function(e){
@@ -94,7 +88,3 @@ function decrementCounter()
 {
   counter.innerText = (parseInt(counter.innerText,10) - 1)
 }
-
-
-//listener on like - counter val-> key : value->times
-//find(and increment) or create
